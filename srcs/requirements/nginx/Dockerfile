@@ -6,7 +6,7 @@
 #    By: psegura- <psegura-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/09 13:25:54 by psegura-          #+#    #+#              #
-#    Updated: 2023/09/09 14:00:36 by psegura-         ###   ########.fr        #
+#    Updated: 2023/09/09 16:34:36 by psegura-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,4 +25,4 @@ RUN mkdir -p /var/log/nginx
 EXPOSE 80
 
 # Start Nginx in the foreground when a container is launched
-CMD ["nginx -g daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
