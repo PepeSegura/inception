@@ -1,0 +1,21 @@
+#!/bin/bash
+
+case $1 in
+    "up")
+	docker build -t base $(pwd)
+	echo "docker exec"
+	;;
+    "down")
+	echo"docker-compose down"
+	;;
+    "exec")
+	echo "docker exec -it client bash -c "lftp -d server""
+	;;
+	"prune")
+	docker system prune -af
+	;;
+    *)
+	echo "usage: ./start.sh [ up | down | start | prune]"
+	exit 1
+	;;
+esac

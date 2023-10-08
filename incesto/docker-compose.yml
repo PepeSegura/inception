@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: /Users/psegura-/Desktop/incesto/nginx
+    volumes:
+      - db_volume:/volume
+    command: cat
+
+
+volumes:
+  db_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /Users/psegura-/Desktop/incesto/volumes/database
