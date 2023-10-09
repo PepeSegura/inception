@@ -1,18 +1,38 @@
 version: '3'
 
 services:
-  nginx:
-    build:
-      context: /Users/psegura-/Desktop/incesto/nginx
-    volumes:
-      - db_volume:/volume
-    command: cat
 
+# Falta configurar nginx para que redirija las peticiones
+# del puerto 80 al 443, y que redirija la respuesta
+# del servidor al puerto 9000, para que wodrpress pueda mostrarlo
+
+  nginx:
+    build: nginx
+    container_name: nginx
+
+    ports:
+      - "80:80"
+    #   - "443:443"
+  
+  mariadb:
+    build: mariadb
+    container_name: mariadb
+    
+    volumes:
+     - db_volume:/volume
+
+  wordpress:
+    build: wordpress
+    container_name: wordpress
+    
+    volumes:
+     - db_volume:/volume
 
 volumes:
+
   db_volume:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /Users/psegura-/Desktop/incesto/volumes/database
+      device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/database
