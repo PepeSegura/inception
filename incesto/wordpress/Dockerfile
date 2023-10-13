@@ -4,12 +4,10 @@ FROM debian:buster-20230904
 RUN apt update -y;
 RUN apt upgrade -y;
 
-RUN apt-get install -y wget;
+RUN apt-get install -y php-fpm php-mysql curl;
 
-RUN cd /; mkdir volume
+COPY ./tools/WORDPRESS_setup /run.sh
 
-RUN wget https://wordpress.org/latest.tar.gz && tar -xzvf latest.tar.gz
+RUN chmod +x /run.sh
 
-# COPY ./conf/nginx.conf /etc/nginx/nginx.conf
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/run.sh"]

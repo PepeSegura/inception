@@ -4,10 +4,12 @@ FROM debian:buster-20230904
 RUN apt update -y;
 RUN apt upgrade -y;
 
-ENV MYSQL_ROOT_PASSWORD=1234
+RUN apt-get install -y mariadb-server;
 
-RUN apt-get install -y mariadb-server mariadb-client;
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN cd /; mkdir volume
+COPY ./tools/MYSQL_setup /run.sh
 
-CMD ["mysqld_safe"]
+RUN chmod +x /run.sh
+
+ENTRYPOINT [ "/run.sh" ]
