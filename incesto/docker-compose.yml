@@ -1,23 +1,5 @@
 version: '3'
 
-volumes:
-
-  db_volume:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/database
-
-  
-  # wp_volume:
-  #   driver: local
-  #   driver_opts:
-  #     o: bind
-  #     type: none
-  #     device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/wordpress
-
-
 services:
 
 # Falta configurar nginx para que redirija las peticiones
@@ -68,3 +50,19 @@ services:
     # volumes:
     #  - db_volume:/volume
 
+volumes:
+
+  db_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/database
+
+  
+  # wp_volume:
+  #   driver: local
+  #   driver_opts:
+  #     o: bind
+  #     type: none
+  #     device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/wordpress
