@@ -6,14 +6,20 @@ services:
 # del puerto 80 al 443, y que redirija la respuesta
 # del servidor al puerto 9000, para que wodrpress pueda mostrarlo
 
+#########################__Nginx__#########################
   # nginx:
   #   build: nginx
   #   container_name: nginx
 
   #   ports:
   #     - "80:80"
-    #   - "443:443"
-  
+  #     - "443:443"
+
+  #   networks:
+  #     - inception
+
+
+########################__MariaDB__########################
   mariadb:
     build: mariadb
     container_name: mariadb
@@ -28,28 +34,38 @@ services:
     
     restart: always
 
+    networks:
+      - inception
+
     volumes:
-      - db_volume:/var/lib/mysql/
+      - db_volume:/var/lib/mysql/.
 
-  # wordpress:
-  #   build: wordpress
-  #   container_name: wordpress
 
-  #   depends_on:
-  #     - mariadb
+#######################__Wordpress__#######################
+  wordpress:
+    build: wordpress
+    container_name: wordpress
 
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     WORDPRESS_DB_HOST:      ${WORDPRESS_DB_HOST}
-  #     WORDPRESS_DB_NAME:      ${WORDPRESS_DB_NAME}
-  #     WORDPRESS_DB_USER:      ${WORDPRESS_DB_USER}
-  #     WORDPRESS_DB_PASSWORD:  ${WORDPRESS_DB_PASSWORD}
-  #     WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+    depends_on:
+      - mariadb
+
+    env_file:
+      - .env
+    environment:
+      WORDPRESS_DB_HOST:      ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_NAME:      ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_USER:      ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD:  ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
     
-    # volumes:
-    #  - db_volume:/volume
+    networks:
+      - inception
 
+    volumes:
+     - wp_volume:/var/www/html
+
+
+########################__Volumes__########################
 volumes:
 
   db_volume:
@@ -57,12 +73,19 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/database
+      device: volumes/database
 
   
-  # wp_volume:
-  #   driver: local
-  #   driver_opts:
-  #     o: bind
-  #     type: none
-  #     device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/wordpress
+  wp_volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: volumes/wordpress
+
+
+########################__Network__########################
+networks:
+  inception:
+    name: inception
+
