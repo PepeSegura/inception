@@ -33,6 +33,5 @@ ps:
 
 prune:
 	docker system prune -af
-	docker volume prune -f
-	rm -rf volumes/database
-	rm -rf volumes/wordpress
+	docker volume ls -q | xargs -I {} docker volume rm {}
+

@@ -35,7 +35,7 @@ sed -i -r "s/database_user/$WORDPRESS_DB_USER/1"  wp-config.php
 sed -i -r "s/passwod/$WORDPRESS_DB_PASSWORD/1"    wp-config.php
 
 #line 32
-sed -i -r "s/localhost/mariadb/1"    wp-config.php  (to connect with mariadb database)
+sed -i -r "s/localhost/mariadb/1"    wp-config.php  #(to connect with mariadb database)
 
 # installs WordPress and sets up the basic configuration for the site. The --url option specifies the URL of the site, --title sets the site's title, --admin_user and --admin_password set the username and password for the site's administrator account, and --admin_email sets the email address for the administrator. The --skip-email flag prevents WP-CLI from sending an email to the administrator with the login details.
 wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root

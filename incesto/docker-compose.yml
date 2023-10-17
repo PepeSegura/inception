@@ -26,11 +26,6 @@ services:
 
     env_file:
       - .env
-    environment:
-      MYSQL_ROOT_PASSWORD:  ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE:       ${MYSQL_DATABASE}
-      MYSQL_USER:           ${MYSQL_USER}
-      MYSQL_PASSWORD:       ${MYSQL_PASSWORD}
     
     restart: always
 
@@ -38,7 +33,7 @@ services:
       - inception
 
     volumes:
-      - db_volume:/var/lib/mysql/.
+      - db_volume:/var/lib/mysql
 
 
 #######################__Wordpress__#######################
@@ -51,18 +46,12 @@ services:
 
     env_file:
       - .env
-    environment:
-      WORDPRESS_DB_HOST:      ${WORDPRESS_DB_HOST}
-      WORDPRESS_DB_NAME:      ${WORDPRESS_DB_NAME}
-      WORDPRESS_DB_USER:      ${WORDPRESS_DB_USER}
-      WORDPRESS_DB_PASSWORD:  ${WORDPRESS_DB_PASSWORD}
-      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
     
     networks:
       - inception
 
     volumes:
-     - wp_volume:/var/www/html
+      - wp_volume:/var/www/html
 
 
 ########################__Volumes__########################
@@ -73,7 +62,7 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: volumes/database
+      device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/database
 
   
   wp_volume:
@@ -81,7 +70,7 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: volumes/wordpress
+      device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/wordpress
 
 
 ########################__Network__########################
