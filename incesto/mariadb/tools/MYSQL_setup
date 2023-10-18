@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sleep infinity
-
 service mysql start 
 
 echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE ;" > db.sql

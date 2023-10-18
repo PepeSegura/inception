@@ -62,7 +62,7 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/database
+      device: ${DATA_DIR}
 
   
   wp_volume:
@@ -70,7 +70,7 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /Users/psegura-/Desktop/cursus/inception/incesto/volumes/wordpress
+      device: ${WP_DIR}
 
 
 ########################__Network__########################

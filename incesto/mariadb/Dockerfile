@@ -1,7 +1,7 @@
 # MariaDb Dockerfile
 FROM debian:buster-20230904
 
-RUN apt update && apt upgrade -y \
+RUN apt update \
 	&& apt-get install -y mariadb-server;
 
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
