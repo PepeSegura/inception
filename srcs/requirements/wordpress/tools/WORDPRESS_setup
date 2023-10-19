@@ -43,11 +43,15 @@ wp core install --url=$DOMAIN_NAME/ --title=$WORDPRESS_TITLE --admin_user=$WORDP
 # creates a new user account with the specified username, email address, and password. The --role option sets the user's role to author, which gives the user the ability to publish and manage their own posts.
 wp user create $WORDPRESS_DB_USER $WORDPRESS_ADMIN_EMAIL --role=author --user_pass=$WORDPRESS_DB_PASSWORD --allow-root
 
+# creates another user (NOT ADMIN)
+wp user create $WORDPRESS_USER2 $WORDPRESS_USER2_EMAIL --role=editor --user_pass=$WORDPRESS_USER2_PASSWORD --allow-root
+
+
 # installs the Astra theme and activates it for the site. The --activate flag tells WP-CLI to make the theme the active theme for the site.
 wp theme install astra --activate --allow-root
 
 
-wp plugin install redis-cache --activate --allow-root
+# wp plugin install redis-cache --activate --allow-root
 
 
 # uses the sed command to modify the www.conf file in the /etc/php/7.3/fpm/pool.d directory. The s/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g command substitutes the value 9000 for /run/php/php7.3-fpm.sock throughout the file. This changes the socket that PHP-FPM listens on from a Unix domain socket to a TCP port.
@@ -57,7 +61,7 @@ sed -i 's/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/g' /etc/php/7.3/fpm
 mkdir /run/php
 
 
-wp redis enable --allow-root
+# wp redis enable --allow-root
 
 
 # starts the PHP-FPM service in the foreground. The -F flag tells PHP-FPM to run in the foreground, rather than as a daemon in the background.

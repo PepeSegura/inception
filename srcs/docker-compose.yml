@@ -2,35 +2,6 @@ version: '3'
 
 services:
 
-# Falta configurar nginx para que redirija las peticiones
-# del puerto 80 al 443, y que redirija la respuesta
-# del servidor al puerto 9000, para que wodrpress pueda mostrarlo
-
-#########################__Nginx__#########################
-  nginx:
-    build: requirements/nginx
-    container_name: nginx
-
-    env_file:
-      - .env
-
-    ports:
-      - "80:80"
-      - "443:443"
-    
-    depends_on:
-      - wordpress
-    
-    volumes:
-      - wp_volume:/var/www/html
-
-    networks:
-      - inception
-    
-    restart: always
-
-
-
 ########################__MariaDB__########################
   mariadb:
     build: requirements/mariadb
@@ -66,6 +37,27 @@ services:
 
     restart: always
 
+#########################__Nginx__#########################
+  nginx:
+    build: requirements/nginx
+    container_name: nginx
+
+    env_file:
+      - .env
+
+    ports:
+      - "443:443"
+    
+    depends_on:
+      - wordpress
+    
+    volumes:
+      - wp_volume:/var/www/html
+
+    networks:
+      - inception
+    
+    restart: always
 
 ########################__Volumes__########################
 volumes:

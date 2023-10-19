@@ -23,7 +23,8 @@ start:
 stop:
 	docker-compose -f $(COMPOSE_FILE) -p $(PROJECT_NAME) stop
 
-restart: stop start
+restart:: stop
+restart:: start
 
 logs:
 	docker-compose -f $(COMPOSE_FILE) -p $(PROJECT_NAME) logs -f
