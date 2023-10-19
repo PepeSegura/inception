@@ -11,6 +11,9 @@ services:
     build: requirements/nginx
     container_name: nginx
 
+    env_file:
+      - .env
+
     ports:
       - "80:80"
       - "443:443"

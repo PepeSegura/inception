@@ -9,8 +9,5 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 COPY ./tools/WORDPRESS_setup /run.sh
-COPY ./tools/wp_config.php /var/www/html/wp_config.php
-
-RUN chmod +x /run.sh
 
 CMD ["/run.sh"]

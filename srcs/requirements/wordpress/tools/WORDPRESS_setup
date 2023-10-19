@@ -28,20 +28,20 @@ mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 # change the those lines in wp-config.php file to connect with database
 
 #line 23
-sed -i -r "s/database/$WORDPRESS_DB_NAME/1"   wp-config.php
+sed -i -r "s/database_name_here/$WORDPRESS_DB_NAME/1"   wp-config.php
 #line 26
-sed -i -r "s/database_user/$WORDPRESS_DB_USER/1"  wp-config.php
+sed -i -r "s/username_here/$WORDPRESS_DB_USER/1"  wp-config.php
 #line 29
-sed -i -r "s/passwod/$WORDPRESS_DB_PASSWORD/1"    wp-config.php
+sed -i -r "s/password_here/$WORDPRESS_DB_PASSWORD/1"    wp-config.php
 
 #line 32
 sed -i -r "s/localhost/mariadb/1"    wp-config.php  #(to connect with mariadb database)
 
 # installs WordPress and sets up the basic configuration for the site. The --url option specifies the URL of the site, --title sets the site's title, --admin_user and --admin_password set the username and password for the site's administrator account, and --admin_email sets the email address for the administrator. The --skip-email flag prevents WP-CLI from sending an email to the administrator with the login details.
-wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN_USR --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
+wp core install --url=$DOMAIN_NAME/ --title=$WORDPRESS_TITLE --admin_user=$WORDPRESS_DB_USER --admin_password=$WORDPRESS_DB_PASSWORD --admin_email=$WORDPRESS_ADMIN_EMAIL --skip-email --allow-root
 
 # creates a new user account with the specified username, email address, and password. The --role option sets the user's role to author, which gives the user the ability to publish and manage their own posts.
-wp user create $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD --allow-root
+wp user create $WORDPRESS_DB_USER $WORDPRESS_ADMIN_EMAIL --role=author --user_pass=$WORDPRESS_DB_PASSWORD --allow-root
 
 # installs the Astra theme and activates it for the site. The --activate flag tells WP-CLI to make the theme the active theme for the site.
 wp theme install astra --activate --allow-root
