@@ -1,35 +1,13 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Dockerfile                                         :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: psegura- <psegura-@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/09 13:25:54 by psegura-          #+#    #+#              #
-#    Updated: 2023/09/14 01:30:44 by psegura-         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# NGINX Dockerfile
+FROM debian:buster-20230904
 
-FROM debian:buster
+ENV DEBIAN_FRONTEND=noninteractive
 
-# # Label your image with your information
-# LABEL maintainer="psegura-@student.42madrid.com"
+RUN apt update && \
+	apt-get install -y nginx && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install Nginx and any other required dependencies
-RUN apt update ; apt upgrade ; apt install nginx -y
-# Instal vim, curl and OpenSSL
-RUN apt install -y vim curl openssl
-
-RUN mkdir -p /etc/nginx/ssl
-
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Madrid/O=42/OU=42/CN=psegura-.42.fr/UID=login"
-
-RUN mkdir -p /var/run/nginx
-
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-
-RUN chmod 755 /var/www/html
-
-RUN chown -R www-data:www-data /var/www/html
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]

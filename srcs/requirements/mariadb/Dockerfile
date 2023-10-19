@@ -1,35 +1,17 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Dockerfile                                         :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: psegura- <psegura-@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/09/14 01:38:52 by psegura-          #+#    #+#              #
-#    Updated: 2023/09/14 01:41:04 by psegura-         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# MariaDb Dockerfile
+FROM debian:buster-20230904
 
-FROM debian:buster
+ENV DEBIAN_FRONTEND=noninteractive
 
-# # Label your image with your information
-# LABEL maintainer="psegura-@student.42madrid.com"
+RUN apt update && \
+	apt-get install -y mariadb-server && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install Nginx and any other required dependencies
-RUN apt update ; apt upgrade ; apt install mariadb-server -y
-# Instal vim, curl and OpenSSL
-RUN apt install -y vim curl
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-# RUN mkdir -p /etc/nginx/ssl
+COPY ./tools/MYSQL_setup /run.sh
 
-# RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=FR/ST=IDF/L=Madrid/O=42/OU=42/CN=psegura-.42.fr/UID=login"
+RUN chmod +x /run.sh
 
-# RUN mkdir -p /var/run/nginx
-
-# COPY conf/nginx.conf /etc/nginx/nginx.conf
-
-# RUN chmod 755 /var/www/html
-
-# RUN chown -R www-data:www-data /var/www/html
-
-# CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT [ "/run.sh" ]
